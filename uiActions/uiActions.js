@@ -12,44 +12,35 @@ const {
 
 const { createPage } = require("../workFlow/createPage");
 
-const getCountryHeader = async () => {
-    const { page, browser } = await createPage();
-    const getHeader = await page.evaluate(() => document.querySelector(".large-7.medium-7.columns div h1").innerText);
-    console.log(getHeader);
-    await browser.close();
-};
-
-const getHeaderCountry = async () => {
-    const { page, browser } = await createPage();
-    const getHeader = await page.evaluate(() => document.querySelector(".large-7.medium-7.columns div h1").innerText);
-    console.log(getHeader);
-    await browser.close();
-};
-
-const getDescCountry = async () => {
-    const { page, browser } = await createPage();
-    const getDesc = await page.evaluate(() => document.querySelector(".large-7.medium-7.columns div h4").innerText);
-    console.log(getDesc);
-    await browser.close();
-};
-
-const insertValueToForm = async () => {
+const insertValuesToForm = async () => {
     const { page, browser } = await createPage();
     await page.waitForSelector("input[name='name']");
 
-    const editFields = await page.evaluate(() => {
-        const nameInput = document.querySelectorAll("input");
-        const myDetails = ["Lior solomon", "liorlsa9@gmail.com", "0549303109", "Jones"]
-        nameInput.forEach((element, index) => element.value = myDetails[index]);
-    });
+    await editFields(page);
+    await selectFromOptions(page);
+    await screenshotPage(page);
+    await submitForm(page);
+
+    await page.waitForSelector(".bg-wrapper.thank-you");
+    console.log("In the 'Thank-you' page");
     await browser.close();
 };
 
 
+
+const editFields = async (page) => await page.evaluate(() => {
+    const nameInput = document.querySelectorAll("input");
+    const myDetails = ["Lior solomon", "liorlsa9@gmail.com", "0549303109", "Jones"]
+    nameInput.forEach((element, index) => element.value = myDetails[index]);
+});
+const selectFromOptions = async (page) => await page.select("select#employees", "51-500");
+const screenshotPage = async (page) => await page.screenshot({ path: 'example.png' });
+const submitForm = async (page) => await page.click("button.primary.button");
+
+
+
 module.exports = {
-    getCountryHeader,
-    getDescCountry,
-    insertValueToForm
+    insertValuesToForm
 }
 
 //primary button

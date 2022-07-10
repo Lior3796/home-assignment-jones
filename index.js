@@ -1,3 +1,6 @@
 const puppeteer = require('puppeteer');
-const { getCountryHeader, insertValueToForm } = require("./uiActions/uiActions");
-insertValueToForm();
+const { createPage } = require("./workFlow/createPage");
+const { insertValuesToForm } = require("./uiActions/uiActions");
+
+insertValuesToForm();
+
