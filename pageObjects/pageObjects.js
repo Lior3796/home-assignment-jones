@@ -9,5 +9,4 @@ module.exports = {
     BTN_SUBMIT,
     TEXT_THANKYOU,
     FORM_SERVICE
-
 }
