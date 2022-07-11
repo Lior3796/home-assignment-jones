@@ -1,5 +1,7 @@
-const puppeteer = require('puppeteer');
-const { insertValuesToForm } = require("./uiActions/uiActions");
+const submitFormWorkflow = require("./workFlow/submitFormFlow");
+const { createPage } = require("./workFlow/createPage");
 
-insertValuesToForm();
+(() => {
+    submitFormWorkflow();
+})();
 
