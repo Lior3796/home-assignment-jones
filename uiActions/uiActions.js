@@ -1,27 +1,26 @@
-const puppeteer = require('puppeteer');
+// The variables below are page object but don't works properly
+
 const {
-    HEADER_COUNTRY,
-    HEADER_COUNTRY_DESC,
-    SUBHEADER_PANEL,
-    PARAGRAPH_PANEL,
-    INPUT_NAME,
-    INPUT_EMAIL,
-    INPUT_PHONE,
-    INPUT_COMPANY
+    SELECT_EMPLOYEES,
+    BTN_SUBMIT,
+    TEXT_THANKYOU,
+    FORM_SERVICE,
 } = require("../pageObjects/pageObjects");
+
+// Create page function use the puppeteer libary to open browser and create page 
 
 const { createPage } = require("../workFlow/createPage");
 
 const insertValuesToForm = async () => {
     const { page, browser } = await createPage();
-    await page.waitForSelector("input[name='name']");
+    await page.waitForSelector(FORM_SERVICE);
 
     await editFields(page);
     await selectFromOptions(page);
     await screenshotPage(page);
     await submitForm(page);
 
-    await page.waitForSelector(".bg-wrapper.thank-you");
+    await page.waitForSelector(TEXT_THANKYOU);
     console.log("In the 'Thank-you' page");
     await browser.close();
 };
@@ -29,13 +28,14 @@ const insertValuesToForm = async () => {
 
 
 const editFields = async (page) => await page.evaluate(() => {
-    const nameInput = document.querySelectorAll("input");
+    const inputsFields = document.querySelectorAll(".input");
     const myDetails = ["Lior solomon", "liorlsa9@gmail.com", "0549303109", "Jones"]
-    nameInput.forEach((element, index) => element.value = myDetails[index]);
+    inputsFields.forEach((element, index) => element.value = myDetails[index]);
 });
-const selectFromOptions = async (page) => await page.select("select#employees", "51-500");
+
+const selectFromOptions = async (page) => await page.select(SELECT_EMPLOYEES, "51-500");
 const screenshotPage = async (page) => await page.screenshot({ path: 'example.png' });
-const submitForm = async (page) => await page.click("button.primary.button");
+const submitForm = async (page) => await page.click(BTN_SUBMIT);
 
 
 
@@ -43,7 +43,6 @@ module.exports = {
     insertValuesToForm
 }
 
-//primary button
 
 
 
